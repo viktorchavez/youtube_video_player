@@ -451,14 +451,11 @@ class PotraitPlayer extends StatelessWidget {
                                                           builder: (context) =>
                                                               LandscapePlayer(
                                                                   controlsColor:
-                                                                      Colors
-                                                                          .greenAccent,
+                                                                      controlsColor,
                                                                   primaryColor:
-                                                                      Colors
-                                                                          .red,
+                                                                      primaryColor,
                                                                   textColor:
-                                                                      Colors
-                                                                          .grey),
+                                                                      textColor),
                                                         ));
                                                   },
                                                   style: TextButton.styleFrom(
