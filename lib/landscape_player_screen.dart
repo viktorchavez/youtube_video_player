@@ -1,4 +1,3 @@
-import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import '../../const/colors/colors.dart';
@@ -24,18 +23,6 @@ class LandscapePlayer extends StatefulWidget {
 
 class _LandscapePlayerState extends State<LandscapePlayer> {
   LandscapeController controller = Get.put(LandscapeController());
-
-  @override
-  void initState() {
-    AutoOrientation.landscapeAutoMode();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    AutoOrientation.portraitAutoMode();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

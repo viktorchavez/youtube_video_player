@@ -456,6 +456,7 @@ class PotraitPlayer extends StatelessWidget {
                                                                       primaryColor,
                                                                   textColor:
                                                                       textColor),
+                                                          fullscreenDialog: true,
                                                         ));
                                                   },
                                                   style: TextButton.styleFrom(
