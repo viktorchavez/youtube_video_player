@@ -1,6 +1,6 @@
 name: youtube_video_player
 description: A versatile Flutter package that allows you to easily integrate a YouTube player into your Flutter applications.
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/shoyabsiddique/youtube_video_player
 repository: https://github.com/shoyabsiddique/youtube_video_player
 publish_to: null
