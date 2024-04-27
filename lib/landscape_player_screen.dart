@@ -1,3 +1,4 @@
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import '../../const/colors/colors.dart';
@@ -19,6 +20,8 @@ class LandscapePlayer extends StatelessWidget {
   LandscapeController controller = Get.put(LandscapeController());
   @override
   Widget build(BuildContext context) {
+    print('AAA');
+    // AutoOrientation.landscapeLeftMode();
     return Scaffold(
       body: Obx(
         () => Get.find<VideoPlayerSreenController>().isInitialized.value
