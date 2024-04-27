@@ -7,7 +7,7 @@ import 'video_player_controller.dart';
 import 'landscape_video.dart';
 
 // ignore: must_be_immutable
-class LandscapePlayer extends StatelessWidget {
+class LandscapePlayer extends StatefulWidget {
   final Color? controlsColor;
   final Color? primaryColor;
   final Color? textColor;
@@ -17,24 +17,41 @@ class LandscapePlayer extends StatelessWidget {
     this.primaryColor,
     this.textColor,
   });
+
+  @override
+  State<LandscapePlayer> createState() => _LandscapePlayerState();
+}
+
+class _LandscapePlayerState extends State<LandscapePlayer> {
   LandscapeController controller = Get.put(LandscapeController());
+
+  @override
+  void initState() {
+    AutoOrientation.landscapeAutoMode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    AutoOrientation.portraitAutoMode();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('AAA');
-    // AutoOrientation.landscapeLeftMode();
     return Scaffold(
       body: Obx(
         () => Get.find<VideoPlayerSreenController>().isInitialized.value
             ? LandscapeVideo(
-                controlsColor: controlsColor,
-                primaryColor: primaryColor,
-                textColor: textColor,
+                controlsColor: widget.controlsColor,
+                primaryColor: widget.primaryColor,
+                textColor: widget.textColor,
               )
             : Container(
                 color: Colors.black,
                 child: Center(
                     child: CircularProgressIndicator(
-                  color: primaryColor,
+                  color: widget.primaryColor,
                 ))),
       ),
     );
