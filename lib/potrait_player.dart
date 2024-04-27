@@ -1,5 +1,4 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -431,7 +430,7 @@ class PotraitPlayer extends StatelessWidget {
                                                 MainAxisAlignment.start,
                                             children: [
                                               TextButton(
-                                                  onPressed: () async {
+                                                  onPressed: () {
                                                     WidgetsBinding.instance
                                                         .addObserver(
                                                             LandscapeController());
@@ -446,7 +445,6 @@ class PotraitPlayer extends StatelessWidget {
                                                             overlays:
                                                                 SystemUiOverlay
                                                                     .values);
-                                                    await AutoOrientation.landscapeAutoMode();
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
