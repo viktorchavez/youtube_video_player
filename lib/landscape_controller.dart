@@ -31,14 +31,16 @@ class LandscapeController extends GetxController with WidgetsBindingObserver {
   }
 
   @override
-  void onClose() {
+  void onClose() async {
     WidgetsBinding.instance.removeObserver(this);
-    super.onClose();
-    SystemChrome.setPreferredOrientations([
+
+    await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
+
+    super.onClose();
   }
 
   @override
