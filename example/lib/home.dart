@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_video_player/potrait_player.dart';
+import 'package:youtube_video_player/portrait_player.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           link != null
-              ? PotraitPlayer(
+              ? PortraitPlayer(
                   link: link!,
                   aspectRatio: 16 / 9,
                   controlsColor: Colors.greenAccent,

@@ -14,13 +14,13 @@ import 'video_player_controller.dart';
 import 'landscape_player_screen.dart';
 import 'popop.dart';
 
-class PotraitPlayer extends StatelessWidget {
+class PortraitPlayer extends StatefulWidget {
   final String link;
   final double aspectRatio;
   final Color? controlsColor;
   final Color? primaryColor;
   final Color? textColor;
-  const PotraitPlayer({
+  const PortraitPlayer({
     super.key,
     required this.link,
     required this.aspectRatio,
@@ -28,11 +28,25 @@ class PotraitPlayer extends StatelessWidget {
     this.primaryColor,
     this.textColor,
   });
+
+  @override
+  State<PortraitPlayer> createState() => _PortraitPlayerState();
+}
+
+class _PortraitPlayerState extends State<PortraitPlayer> {
+  late VideoPlayerSreenController controller;
+
+  @override
+  void initState() {
+    GetInstance().resetInstance();
+    controller =
+        Get.put(VideoPlayerSreenController(link: widget.link));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Wakelock.enable();
-    VideoPlayerSreenController controller =
-        Get.put(VideoPlayerSreenController(link: link));
     double width = MediaQuery.of(context).size.width;
     // File myAsset = File("packages/youtube_video_player/lib/assets/10for.svg");
     // controller.manifest =
@@ -48,7 +62,7 @@ class PotraitPlayer extends StatelessWidget {
       return orientation == Orientation.portrait
           ? GestureDetector(
               child: AspectRatio(
-                aspectRatio: aspectRatio,
+                aspectRatio: widget.aspectRatio,
                 child: Obx(
                   () => GestureDetector(
                     onTap: () {
@@ -68,7 +82,7 @@ class PotraitPlayer extends StatelessWidget {
                                         text: controller.currentSubtitle?.data,
                                         textStyle: TextStyle(
                                             fontSize: 15,
-                                            color: textColor ?? Colors.white),
+                                            color: widget.textColor ?? Colors.white),
                                       )
                                     : const SizedBox.shrink(),
                               ), //Captions
@@ -91,7 +105,7 @@ class PotraitPlayer extends StatelessWidget {
                                                 "assets/icons/10rev.svg",
                                                 width: 30,
                                                 height: 30,
-                                                color: controlsColor,
+                                                color: widget.controlsColor,
                                                 package: "youtube_video_player",
                                               ),
                                               onPressed: () {
@@ -108,7 +122,7 @@ class PotraitPlayer extends StatelessWidget {
                                                     ? "assets/icons/pause_video.svg"
                                                     : "assets/icons/play_video.svg",
                                                 width: 48,
-                                                color: primaryColor,
+                                                color: widget.primaryColor,
                                                 package: "youtube_video_player",
                                               ),
                                               onPressed: () {
@@ -127,7 +141,7 @@ class PotraitPlayer extends StatelessWidget {
                                                   "assets/icons/10for.svg",
                                                   width: 30,
                                                   height: 30,
-                                                  color: controlsColor,
+                                                  color: widget.controlsColor,
                                                   package:
                                                       "youtube_video_player"),
                                               onPressed: () {
@@ -205,13 +219,13 @@ class PotraitPlayer extends StatelessWidget {
                                                                 overlayRadius:
                                                                     1),
                                                         thumbColor:
-                                                            primaryColor ??
+                                                            widget.primaryColor ??
                                                                 Colors.white,
                                                         activeTrackColor:
-                                                            primaryColor ??
+                                                            widget.primaryColor ??
                                                                 Colors.white,
                                                         inactiveTrackColor:
-                                                            controlsColor ??
+                                                            widget.controlsColor ??
                                                                 Colors.grey),
                                                     child: Slider(
                                                       value: controller
@@ -255,7 +269,7 @@ class PotraitPlayer extends StatelessWidget {
                                                   },
                                                   child: SvgPicture.asset(
                                                     "assets/icons/brightness.svg",
-                                                    color: controlsColor,
+                                                    color: widget.controlsColor,
                                                     package:
                                                         "youtube_video_player",
                                                     height: 20,
@@ -296,13 +310,13 @@ class PotraitPlayer extends StatelessWidget {
                                                                 overlayRadius:
                                                                     1),
                                                         thumbColor:
-                                                            primaryColor ??
+                                                            widget.primaryColor ??
                                                                 Colors.white,
                                                         activeTrackColor:
-                                                            primaryColor ??
+                                                            widget.primaryColor ??
                                                                 Colors.white,
                                                         inactiveTrackColor:
-                                                            controlsColor ??
+                                                            widget.controlsColor ??
                                                                 Colors.grey),
                                                     child: Slider(
                                                       value: controller
@@ -362,7 +376,7 @@ class PotraitPlayer extends StatelessWidget {
                                                         package:
                                                             "youtube_video_player",
                                                         width: 20,
-                                                        color: controlsColor,
+                                                        color: widget.controlsColor,
                                                         height: 20,
                                                       )
                                                     : SvgPicture.asset(
@@ -370,7 +384,7 @@ class PotraitPlayer extends StatelessWidget {
                                                         package:
                                                             "youtube_video_player",
                                                         width: 20,
-                                                        color: controlsColor,
+                                                        color: widget.controlsColor,
                                                         height: 20,
                                                       )),
                                               ),
@@ -396,8 +410,8 @@ class PotraitPlayer extends StatelessWidget {
                                               baseBarColor: Colors.white,
                                               bufferedBarColor:
                                                   Colors.grey[300],
-                                              progressBarColor: primaryColor,
-                                              thumbColor: primaryColor,
+                                              progressBarColor: widget.primaryColor,
+                                              thumbColor: widget.primaryColor,
                                               thumbRadius: 5,
                                               progress:
                                                   controller.position.value,
@@ -411,7 +425,7 @@ class PotraitPlayer extends StatelessWidget {
                                                   .seekTo(value),
                                               timeLabelTextStyle: TextStyle(
                                                   fontWeight: FontWeight.w600,
-                                                  color: textColor,
+                                                  color: widget.textColor,
                                                   fontSize: 10),
                                               barCapShape: BarCapShape.round,
                                               timeLabelPadding: 5,
@@ -451,11 +465,11 @@ class PotraitPlayer extends StatelessWidget {
                                                           builder: (context) =>
                                                               LandscapePlayer(
                                                                   controlsColor:
-                                                                      controlsColor,
+                                                                      widget.controlsColor,
                                                                   primaryColor:
-                                                                      primaryColor,
+                                                                      widget.primaryColor,
                                                                   textColor:
-                                                                      textColor),
+                                                                      widget.textColor),
                                                           fullscreenDialog: true,
                                                         ));
                                                   },
@@ -471,7 +485,7 @@ class PotraitPlayer extends StatelessWidget {
                                                     "assets/icons/fullscreen.svg",
                                                     width: 30,
                                                     height: 30,
-                                                    color: controlsColor,
+                                                    color: widget.controlsColor,
                                                     package:
                                                         "youtube_video_player",
                                                   )),
@@ -502,7 +516,7 @@ class PotraitPlayer extends StatelessWidget {
                                                     "assets/icons/settings.svg",
                                                     width: 30,
                                                     height: 30,
-                                                    color: controlsColor,
+                                                    color: widget.controlsColor,
                                                     package:
                                                         "youtube_video_player",
                                                   )),
@@ -515,12 +529,12 @@ class PotraitPlayer extends StatelessWidget {
                             ],
                           )
                         : AspectRatio(
-                            aspectRatio: aspectRatio,
+                            aspectRatio: widget.aspectRatio,
                             child: Container(
                                 color: Colors.black,
                                 child: Center(
                                     child: CircularProgressIndicator(
-                                  color: primaryColor,
+                                  color: widget.primaryColor,
                                 ))),
                           ),
                   ),
@@ -529,5 +543,11 @@ class PotraitPlayer extends StatelessWidget {
             )
           : Container();
     });
+  }
+
+  @override
+  void dispose() {
+    controller.onClose();
+    super.dispose();
   }
 }

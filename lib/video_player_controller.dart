@@ -87,8 +87,8 @@ class VideoPlayerSreenController extends GetxController
         position.value = controller.value.position;
         duration.value = controller.value.duration;
         isInitialized.value = true;
-        controller.play();
-        isPlaying.value = true;
+        // controller.play();
+        // isPlaying.value = true;
       });
     controller.addListener(() async {
       position.value = controller.value.position;
