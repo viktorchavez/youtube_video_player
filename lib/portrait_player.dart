@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:youtube_video_player/landscape_controller.dart';
 // import '../../const/colors/colors.dart';
 // import '../../const/constants/constants.dart';
@@ -46,7 +46,7 @@ class _PortraitPlayerState extends State<PortraitPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    Wakelock.enable();
+    WakelockPlus.enable();
     double width = MediaQuery.of(context).size.width;
     // File myAsset = File("packages/youtube_video_player/lib/assets/10for.svg");
     // controller.manifest =
