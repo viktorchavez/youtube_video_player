@@ -74,11 +74,17 @@ class VideoPlayerSreenController extends GetxController
     manifest =
         await yt.videos.streamsClient.getManifest(getYouTubeVideoId(link));
     video = await yt.videos.get(getYouTubeVideoId(link));
-    qualities.value = manifest!.muxed.toList();
-    if (manifest!.muxed.toList().first.qualityLabel == '144p') {
-      qualities.remove(manifest!.muxed.toList().first);
-    }
-    MuxedStreamInfo streamInfo = manifest!.muxed.bestQuality;
+    // qualities.value = manifest!.muxed.toList();
+    // if (manifest!.muxed.toList().first.qualityLabel == '144p') {
+    //   qualities.remove(manifest!.muxed.toList().first);
+    // }
+    // MuxedStreamInfo streamInfo = manifest!.muxed.bestQuality;
+
+    VideoStreamInfo videoStream = manifest!.video.bestQuality;
+    AudioStreamInfo audioStream = manifest!.audio.first;
+
+    MuxedStreamInfo streamInfo = await createMuxedStreamInfo(videoStream, audioStream);
+
     var url = streamInfo.url;
     controller = VideoPlayerController.networkUrl(
       url,
@@ -110,6 +116,53 @@ class VideoPlayerSreenController extends GetxController
       }
     });
     super.onInit();
+  }
+
+  Future<MuxedStreamInfo> createMuxedStreamInfo(
+      VideoStreamInfo videoStream, AudioStreamInfo audioStream) async {
+    if (videoStream.container != audioStream.container) {
+      throw Exception('Incompatible streams: Container formats do not match.');
+    }
+
+    final videoSize = await getStreamFileSize(videoStream);
+    final audioSize = await getStreamFileSize(audioStream);
+
+    final combinedFileSize = FileSize(videoSize + audioSize);
+
+    final combinedBitrate = Bitrate(
+      videoStream.bitrate.bitsPerSecond + audioStream.bitrate.bitsPerSecond,
+    );
+
+    return MuxedStreamInfo(
+      videoStream.videoId,
+      videoStream.tag,
+      videoStream.url, // Merge or handle URLs as needed
+      videoStream.container,
+      combinedFileSize,
+      combinedBitrate,
+      audioStream.audioCodec!,
+      videoStream.videoCodec!,
+      videoStream.qualityLabel,
+      videoStream.videoQuality,
+      videoStream.videoResolution,
+      videoStream.framerate,
+      videoStream.codec,
+    );
+  }
+
+  Future<int> getStreamFileSize(StreamInfo stream) async {
+    return await fetchFileSize(stream.url);
+  }
+
+  Future<int> fetchFileSize(Uri url) async {
+    final response = await http.head(url);
+    if (response.statusCode == 200) {
+      final contentLength = response.headers['content-length'];
+      if (contentLength != null) {
+        return int.parse(contentLength);
+      }
+    }
+    throw Exception('Failed to fetch file size for URL: $url');
   }
 
   @override
